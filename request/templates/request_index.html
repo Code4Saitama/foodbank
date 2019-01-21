@@ -1,0 +1,140 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>避難所からの要求</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/main.css"/>
+    <!-- Le styles -->
+    <style>
+    body {
+    }
+    .starter-template {
+      padding: 40px 15px;
+      text-align: center;
+    }
+    </style>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/css/colorbox/colorbox.css"/>
+    <script type="text/javascript" src="/static/js/colorbox/jquery.colorbox.js"></script>
+    <script type="text/javascript" src="/static/js/colorbox/i18n/jquery.colorbox-ja.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+
+  </head>
+  <body>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+      <nav class="headermenu navbar navbar-default">
+        <!--デフォルトのスタイリングをリセットしたい場合、navbar-default を削除。-->
+        <div class="container-fluid">
+          <div class="navbar-header">
+
+            <!--ハンバーガー-->
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#site-menu">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <!--//ハンバーガー-->
+
+            <!--左ロゴ-->
+            <a class="navbar-brand" href="/">避難所依頼マップ</a><!--左上のロゴ部分-->
+            <!--//左ロゴ-->
+
+          </div>
+
+          <!-- メニュー　li が項目。必要な分だけ li をコピペで増やす。-->
+          <div class="collapse navbar-collapse" id="site-menu">
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="/about">このアプリについて</a></li>
+            </ul>
+          </div>
+          <!--  -->
+
+        </div>
+      </nav>
+     <!--ここまで-->
+
+
+<style>
+html,body{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+* {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+}
+
+.main_contents {
+    min-height: 100%;
+}
+
+.container {
+    width: 100%;
+}
+
+#map_canvas {
+    background-color: #EEE;
+}
+
+#toolbox {
+    min-height: 15%;
+    padding: 10px;
+    background-color: #FEFEFE;
+
+}
+#map_canvas, #toolbox{
+    margin: 10px auto;
+    width: 99%;
+    height: 100%;
+}
+
+.main_title p{
+    margin: 0 auto;
+    text-align: center;
+}
+
+.col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12 {
+    margin-bottom: 2px;
+}
+
+.main{
+    height: calc(100% - 100px);
+    overflow: scroll;
+}
+
+.map_area, .task_area {
+    height: 100%;
+}
+</style>
+        <div class="row main">
+            <div class="col-md-6 task_area">
+                避難所からの要求事項
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="submit" value="登録">
+                </form>
+            </div>
+        </div>
+      </body>
+</html>
