@@ -33,6 +33,8 @@ class ProgressShelter(APIView):
     def get(self, request, *args, **keywords):
         try:
             queryset = Shelter.objects.raw('select s.id, replace(s.name, \'　\', \' \') as name, floor(COALESCE(p.finish_rate,0) * 100) as finish_rate, floor(COALESCE(p.waiting_rate, 0)*100) as waiting_rate, floor(COALESCE(p.working_rate,0)*100) as working_rate, s.geom  from shelter as s left join progress as p on (s.id = p.shelter_id)')
+            print queryset.query
+            
             encjson = serialize('geojson', queryset, srid=4326, geometry_field='geom', fields=('name', 'finish_rate', 'waiting_rate', 'working_rate',) )
             result   = json.loads(encjson)
             response = Response(result, status=status.HTTP_200_OK)
