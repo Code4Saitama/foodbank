@@ -1,7 +1,7 @@
 from django.contrib.gis import admin
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
-from shelter.views import ShelterViewSet, index, hq, req, GeojsonAPIView
+from shelter.views import ShelterViewSet, index, hq, req, GeojsonAPIView, ProgressShelter
 from django.views.generic.base import RedirectView
 
 from shelter import views
@@ -19,7 +19,10 @@ urlpatterns = [
     path('socket/', include(websocket_urls)),
     path('hq', hq, name='shelter_hq'),
     path('req', req ,name='shelter_req'),
+
     path('shelter/geojson/', GeojsonAPIView.as_view(), name='geojson_view'),
+    path('shelter/progress/', ProgressShelter.as_view(), name='progress_view'),
+
     path('shelter/', views.shelter_list, name='shelter_list'),
     path('shelter/add', views.shelter_edit, name='shelter_add'),
     path('shelter/edit/<int:id>', views.shelter_edit, name='shelter_edit'),

@@ -29,6 +29,21 @@ class ShelterViewSet(viewsets.ModelViewSet):
     distance_filter_field = 'geom'
     distance_filter_convert_meters = True
 
+class ProgressShelter(APIView):
+    def get(self, request, *args, **keywords):
+        try:
+            queryset = Shelter.objects.raw('select s.id, replace(s.name, \'　\', \' \') as name, floor(COALESCE(p.finish_rate,0) * 100) as finish_rate, floor(COALESCE(p.waiting_rate, 0)*100) as waiting_rate, floor(COALESCE(p.working_rate,0)*100) as working_rate, s.geom  from shelter as s left join progress as p on (s.id = p.shelter_id)')
+            encjson = serialize('geojson', queryset, srid=4326, geometry_field='geom', fields=('name', 'finish_rate', 'waiting_rate', 'working_rate',) )
+            result   = json.loads(encjson)
+            response = Response(result, status=status.HTTP_200_OK)
+        except Exception as e:
+            traceback.print_exc()
+            response = Response({}, status=status.HTTP_404_NOT_FOUND)
+        except:
+            response = Response({}, status=status.HTTP_404_NOT_FOUND)
+        return response
+
+
 
 class GeojsonSQLAPIView(APIView):
     def get(self, request, *args, **keywords):
@@ -76,4 +91,3 @@ def shelter_edit(request):
 
 def shelter_delete(request):
     return HttpResponse('delete')
-    
